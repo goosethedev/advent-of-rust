@@ -1,0 +1,11 @@
+123 -> xp
+456 -> y
+1 AND i -> x
+a -> b
+e -> w
+xp AND fg -> d
+h OR i -> e
+e LSHIFT 2 -> fg
+d RSHIFT 2 -> a
+NOT xp -> h
+NOT y -> i
