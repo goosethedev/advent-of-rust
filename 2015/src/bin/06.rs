@@ -1,7 +1,5 @@
 advent_of_code::solution!(6);
 
-use std::u128;
-
 use ndarray::{prelude::*, Array, Ix2};
 
 struct Pair(i32, i32);
@@ -45,8 +43,8 @@ pub fn part_one(input: &str) -> Option<u32> {
     Some(matrix.mapv(u32::from).sum())
 }
 
-pub fn part_two(input: &str) -> Option<u128> {
-    let mut matrix = Array::<u128, Ix2>::from_elem((1000, 1000), 0);
+pub fn part_two(input: &str) -> Option<u32> {
+    let mut matrix = Array::<u32, Ix2>::from_elem((1000, 1000), 0);
     let mut overflow = 0;
 
     for instruction in input.trim().split('\n') {
@@ -57,9 +55,8 @@ pub fn part_two(input: &str) -> Option<u128> {
         let mut slice = matrix.slice_mut(s![p1.0..=p2.0, p1.1..=p2.1]);
 
         // Operate the action
-        // TODO: investigate why does this overflow?
         match action.as_str() {
-            "off" => slice.mapv_inplace(|v| v.checked_sub(1).unwrap_or(0)),
+            "off" => slice.mapv_inplace(|v| v.saturating_sub(1)),
             "on" => slice.mapv_inplace(|v| {
                 if let Some(a) = v.checked_add(1) {
                     a

@@ -1,7 +1,5 @@
 advent_of_code::solution!(4);
 
-use md5;
-
 fn hash_starts_with_n_zeros(input: String, n: usize) -> bool {
     let zeros = "0".repeat(n);
     let digest = format!("{:x}", md5::compute(input));
