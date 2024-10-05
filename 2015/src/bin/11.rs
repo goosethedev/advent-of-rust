@@ -6,7 +6,7 @@ const FORBIDDEN_CHARS: [u8; 3] = [b'i', b'o', b'l'];
 
 fn remove_forbidden(arr: &[u8; 8]) -> [u8; 8] {
     let mut found = false;
-    arr.into_iter()
+    arr.iter()
         .map(|ch| {
             if found {
                 b'a'
@@ -33,7 +33,7 @@ fn increase_one(mut arr: [u8; 8]) -> [u8; 8] {
             break;
         }
     }
-    return arr;
+    arr
 }
 
 fn pass_conditions(arr: &[u8; 8]) -> bool {
@@ -44,13 +44,7 @@ fn pass_conditions(arr: &[u8; 8]) -> bool {
     let mut count_pairs = 0;
     let mut iter = arr.iter();
     let mut curr = iter.next().unwrap();
-    loop {
-        let mut next = if let Some(next) = iter.next() {
-            next
-        } else {
-            break;
-        };
-
+    while let Some(mut next) = iter.next() {
         if curr == next {
             count_pairs += 1;
             next = if let Some(next) = iter.next() {
@@ -59,7 +53,6 @@ fn pass_conditions(arr: &[u8; 8]) -> bool {
                 break;
             };
         }
-
         curr = next;
     }
 
@@ -91,7 +84,7 @@ pub fn part_one(input: &str) -> Option<String> {
 }
 
 pub fn part_two(input: &str) -> Option<String> {
-    let input: [u8; 8] = part_one(&input).unwrap().as_bytes().try_into().ok()?;
+    let input: [u8; 8] = part_one(input).unwrap().as_bytes().try_into().ok()?;
     let input = String::from_utf8(increase_one(input).to_vec()).ok()?;
     part_one(&input)
 }
